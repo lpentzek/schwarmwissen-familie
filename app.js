@@ -20,9 +20,6 @@ const els = {
   grid: document.querySelector("#tipsGrid"),
   empty: document.querySelector("#emptyState"),
   resultCount: document.querySelector("#resultCount"),
-  categoryCount: document.querySelector("#categoryCount"),
-  sourceCount: document.querySelector("#sourceCount"),
-  mediaCount: document.querySelector("#mediaCount"),
 };
 
 init();
@@ -72,10 +69,6 @@ function render() {
   els.grid.innerHTML = tips.map(renderTip).join("");
   els.empty.hidden = tips.length > 0;
   els.resultCount.textContent = `${tips.length} ${tips.length === 1 ? "Tipp" : "Tipps"}`;
-
-  els.categoryCount.textContent = unique(state.tips.map((tip) => tip.kategorie)).length;
-  els.sourceCount.textContent = unique(state.tips.map((tip) => tip.quelle)).length;
-  els.mediaCount.textContent = state.tips.filter((tip) => tip.kategorie.includes("Medien")).length;
 }
 
 function filteredTips() {
@@ -104,25 +97,22 @@ function ageMatches(tip, ageStart) {
 }
 
 function renderTip(tip, index) {
-  const color = ["green", "blue", "yellow", "red"][index % 4];
   const ageLabel = tip.alter || "Alter offen";
   const link = tip.url
-    ? `<a href="${escapeHtml(tip.url)}" target="_blank" rel="noreferrer">Link</a>`
+    ? `<a href="${escapeHtml(tip.url)}" target="_blank" rel="noreferrer">Quelle oeffnen</a>`
     : "<span></span>";
 
   return `
-    <article class="tip-card" data-color="${color}">
+    <article class="tip-card">
       <div class="tip-head">
         <h3>${escapeHtml(tip.titel)}</h3>
-        <span class="badge">${escapeHtml(tip.kategorie)}</span>
+        <div class="tip-meta">
+          <span>${escapeHtml(tip.kategorie)}</span>
+          <span>${escapeHtml(ageLabel)}</span>
+        </div>
       </div>
       <p>${escapeHtml(tip.warum)}</p>
-      <div class="meta-list">
-        <span>${escapeHtml(tip.medium)}</span>
-        <span>${escapeHtml(ageLabel)}</span>
-      </div>
-      <div class="source-line">
-        <span>Empfohlen von ${escapeHtml(tip.quelle)}</span>
+      <div class="tip-footer">
         ${link}
       </div>
     </article>

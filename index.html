@@ -8,90 +8,70 @@
   </head>
   <body>
     <header class="topbar">
-      <a class="brand" href="./" aria-label="Schwarmwissen Familie Startseite">
-        <span class="brand-mark" aria-hidden="true">SF</span>
-        <span>Schwarmwissen Familie</span>
-      </a>
-      <div class="topbar-meta">
-        <span id="resultCount">0 Tipps</span>
+      <div class="topbar-inner">
+        <a class="brand" href="./" aria-label="Schwarmwissen Familie Startseite">
+          <span class="brand-title">Schwarmwissen Familie</span>
+          <span class="brand-subtitle">Tipps aus unserem Kreis</span>
+        </a>
+        <div class="topbar-meta">
+          <span id="resultCount">0 Tipps</span>
+        </div>
       </div>
     </header>
 
     <main>
       <section class="intro">
-        <div class="intro-copy">
-          <p class="eyebrow">Kuratierte Abkuerzungen fuer den Familienalltag</p>
-          <h1>Empfehlungen, die schon durch echten Alltag gegangen sind.</h1>
-          <p>
-            Kinderbuecher, Hoerspiele, Orte und kleine Alltagshelfer aus einem vertrauten Kreis.
-            Durchsuchbar, filterbar und frei von Werbe-Blabla.
-          </p>
-        </div>
-        <div class="signal-board" aria-hidden="true">
-          <span class="tile tile-book">Buch</span>
-          <span class="tile tile-audio">Audio</span>
-          <span class="tile tile-place">Ort</span>
-          <span class="tile tile-hack">Hack</span>
-        </div>
+        <p class="eyebrow">Kuratierte Abkuerzungen fuer den Familienalltag</p>
+        <h1>Ein kleines Archiv fuer Dinge, die sich wirklich bewaehrt haben.</h1>
+        <p>
+          Empfehlungen aus einem vertrauten Kreis. Durchsuchbar, filterbar und ohne
+          algorithmischen Laerm.
+        </p>
       </section>
 
-      <section class="filters" aria-label="Tipps filtern">
-        <div class="search-wrap">
-          <label for="search">Suche</label>
-          <input id="search" type="search" placeholder="Titel, Tag, Ort oder Empfehlung suchen">
-        </div>
+      <section class="workbench">
+        <aside class="filters" aria-label="Tipps filtern">
+          <div class="filter-group">
+            <label for="search">Suche</label>
+            <input id="search" type="search" placeholder="Titel, Kategorie oder Hinweis">
+          </div>
 
-        <div class="filter-row">
-          <label for="category">Kategorie</label>
-          <select id="category">
-            <option value="">Alle Kategorien</option>
-          </select>
-        </div>
+          <div class="filter-group">
+            <label for="category">Kategorie</label>
+            <select id="category">
+              <option value="">Alle</option>
+            </select>
+          </div>
 
-        <div class="filter-row">
-          <label for="age">Alter</label>
-          <select id="age">
-            <option value="">Alle Altersgruppen</option>
-            <option value="0">0-2 Jahre</option>
-            <option value="3">3-5 Jahre</option>
-            <option value="6">6-8 Jahre</option>
-            <option value="9">9+ Jahre</option>
-          </select>
-        </div>
+          <div class="filter-group">
+            <label for="age">Alter</label>
+            <select id="age">
+              <option value="">Alle</option>
+              <option value="0">0-2 Jahre</option>
+              <option value="3">3-5 Jahre</option>
+              <option value="6">6-8 Jahre</option>
+              <option value="9">9+ Jahre</option>
+            </select>
+          </div>
 
-        <div class="filter-row">
-          <label for="medium">Typ</label>
-          <select id="medium">
-            <option value="">Alle Typen</option>
-          </select>
-        </div>
+          <div class="filter-group">
+            <label for="medium">Typ</label>
+            <select id="medium">
+              <option value="">Alle</option>
+            </select>
+          </div>
 
-        <button id="resetFilters" class="ghost-button" type="button">Zuruecksetzen</button>
-      </section>
-
-      <section class="content-shell">
-        <aside class="quick-stats" aria-label="Uebersicht">
-          <h2>Uebersicht</h2>
-          <dl>
-            <div>
-              <dt>Kategorien</dt>
-              <dd id="categoryCount">0</dd>
-            </div>
-            <div>
-              <dt>Quellen</dt>
-              <dd id="sourceCount">0</dd>
-            </div>
-            <div>
-              <dt>Medien-First</dt>
-              <dd id="mediaCount">0</dd>
-            </div>
-          </dl>
+          <button id="resetFilters" class="ghost-button" type="button">Filter zuruecksetzen</button>
         </aside>
 
-        <section>
-          <div id="tipsGrid" class="tips-grid" aria-live="polite"></div>
+        <section class="archive" aria-label="Empfehlungen">
+          <div class="archive-head">
+            <h2>Empfehlungen</h2>
+            <span class="archive-note">Aus dem Google Sheet geladen</span>
+          </div>
+          <div id="tipsGrid" class="tips-list" aria-live="polite"></div>
           <p id="emptyState" class="empty-state" hidden>
-            Keine passenden Tipps gefunden. Filter kurz lockern und nochmal schauen.
+            Nichts gefunden.
           </p>
         </section>
       </section>
@@ -100,4 +80,3 @@
     <script src="app.js"></script>
   </body>
 </html>
-
