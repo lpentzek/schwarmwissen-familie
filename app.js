@@ -146,7 +146,7 @@ function normalizeTip(row) {
 
 async function loadTips() {
   try {
-    const response = await fetch(API_URL);
+    const response = await fetch(API_URL, { cache: "no-store" });
     if (!response.ok) throw new Error("API nicht erreichbar");
     const tips = await response.json();
     return tips.map(normalizeTip);

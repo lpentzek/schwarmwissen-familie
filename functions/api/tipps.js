@@ -11,7 +11,7 @@ export async function onRequestGet({ env }) {
     const tips = rowsToTips(values);
 
     return json(tips, {
-      "Cache-Control": "public, max-age=300",
+      "Cache-Control": "no-store",
     });
   } catch (error) {
     return json(
@@ -185,4 +185,3 @@ function arrayBufferToBase64Url(buffer) {
 
   return btoa(binary).replaceAll("+", "-").replaceAll("/", "_").replaceAll("=", "");
 }
-
