@@ -21,16 +21,16 @@
 
     <main>
       <section class="intro">
-        <p class="eyebrow">Kuratierte Abkuerzungen fuer den Familienalltag</p>
-        <h1>Ein kleines Archiv fuer Dinge, die sich wirklich bewaehrt haben.</h1>
+        <p class="eyebrow">Private Empfehlungsdatenbank</p>
+        <h1>Tipps aus dem Familienalltag, sauber sortiert.</h1>
         <p>
-          Empfehlungen aus einem vertrauten Kreis. Durchsuchbar, filterbar und ohne
-          algorithmischen Laerm.
+          Eine kleine, dynamische Datenbank aus unserem Google Sheet. Fokus auf schnelle Suche,
+          klare Filter und knappe Hinweise.
         </p>
       </section>
 
-      <section class="workbench">
-        <aside class="filters" aria-label="Tipps filtern">
+      <section class="database-shell">
+        <div class="toolbar" aria-label="Tipps filtern">
           <div class="filter-group">
             <label for="search">Suche</label>
             <input id="search" type="search" placeholder="Titel, Kategorie oder Hinweis">
@@ -62,13 +62,25 @@
           </div>
 
           <button id="resetFilters" class="ghost-button" type="button">Filter zuruecksetzen</button>
-        </aside>
+        </div>
 
         <section class="archive" aria-label="Empfehlungen">
           <div class="archive-head">
-            <h2>Empfehlungen</h2>
-            <span class="archive-note">Aus dem Google Sheet geladen</span>
+            <div>
+              <h2>Empfehlungen</h2>
+              <span class="archive-note">Live aus Google Sheets</span>
+            </div>
+            <span class="status-pill">readonly</span>
           </div>
+
+          <div class="table-head" aria-hidden="true">
+            <span>Titel</span>
+            <span>Kategorie</span>
+            <span>Alter</span>
+            <span>Hinweis</span>
+            <span>URL</span>
+          </div>
+
           <div id="tipsGrid" class="tips-list" aria-live="polite"></div>
           <p id="emptyState" class="empty-state" hidden>
             Nichts gefunden.

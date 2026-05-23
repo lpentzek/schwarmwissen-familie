@@ -96,23 +96,32 @@ function ageMatches(tip, ageStart) {
   return tip.alterMin <= ageEnd && tip.alterMax >= ageStart;
 }
 
-function renderTip(tip, index) {
+function renderTip(tip) {
   const ageLabel = tip.alter || "Alter offen";
   const link = tip.url
-    ? `<a href="${escapeHtml(tip.url)}" target="_blank" rel="noreferrer">Quelle oeffnen</a>`
-    : "<span></span>";
+    ? `<a href="${escapeHtml(tip.url)}" target="_blank" rel="noreferrer">Oeffnen</a>`
+    : "<span>-</span>";
 
   return `
     <article class="tip-card">
-      <div class="tip-head">
+      <div class="tip-title">
         <h3>${escapeHtml(tip.titel)}</h3>
-        <div class="tip-meta">
-          <span>${escapeHtml(tip.kategorie)}</span>
-          <span>${escapeHtml(ageLabel)}</span>
-        </div>
+        <span class="tip-subtle">${escapeHtml(tip.quelle)}</span>
       </div>
-      <p>${escapeHtml(tip.warum)}</p>
-      <div class="tip-footer">
+      <div class="tip-category">
+        <span class="cell-label">Kategorie</span>
+        <span>${escapeHtml(tip.kategorie)}</span>
+      </div>
+      <div class="tip-age">
+        <span class="cell-label">Alter</span>
+        <span>${escapeHtml(ageLabel)}</span>
+      </div>
+      <div class="tip-note">
+        <span class="cell-label">Hinweis</span>
+        <span>${escapeHtml(tip.warum)}</span>
+      </div>
+      <div class="tip-link">
+        <span class="cell-label">URL</span>
         ${link}
       </div>
     </article>
