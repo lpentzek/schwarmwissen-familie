@@ -1,5 +1,5 @@
-const GOOGLE_SHEET_CSV_URL = "";
 const LOCAL_CSV_URL = "data/tipps.csv";
+const API_URL = "/api/tipps";
 
 const state = {
   tips: [],
@@ -28,9 +28,7 @@ const els = {
 init();
 
 async function init() {
-  const csvUrl = GOOGLE_SHEET_CSV_URL || LOCAL_CSV_URL;
-  const csv = await fetch(csvUrl).then((response) => response.text());
-  state.tips = parseCsv(csv).map(normalizeTip);
+  state.tips = await loadTips();
 
   populateSelect(els.category, unique(state.tips.map((tip) => tip.kategorie)));
   populateSelect(els.medium, unique(state.tips.map((tip) => tip.medium)));
@@ -77,9 +75,7 @@ function render() {
 
   els.categoryCount.textContent = unique(state.tips.map((tip) => tip.kategorie)).length;
   els.sourceCount.textContent = unique(state.tips.map((tip) => tip.quelle)).length;
-  els.mediaCount.textContent = state.tips.filter((tip) =>
-    ["Kinderbuch", "Hoerspiel", "Musik", "Film"].includes(tip.medium)
-  ).length;
+  els.mediaCount.textContent = state.tips.filter((tip) => tip.kategorie.includes("Medien")).length;
 }
 
 function filteredTips() {
@@ -88,10 +84,9 @@ function filteredTips() {
       tip.titel,
       tip.kategorie,
       tip.medium,
-      tip.ort,
       tip.quelle,
       tip.warum,
-      tip.tags,
+      tip.url,
     ].join(" ").toLowerCase();
 
     const matchesSearch = !state.filters.search || text.includes(state.filters.search);
@@ -110,14 +105,9 @@ function ageMatches(tip, ageStart) {
 
 function renderTip(tip, index) {
   const color = ["green", "blue", "yellow", "red"][index % 4];
-  const ageLabel = `${tip.alterMin}-${tip.alterMax} Jahre`;
-  const tags = tip.tags
-    .split("|")
-    .map((tag) => tag.trim())
-    .filter(Boolean)
-    .slice(0, 4);
-  const link = tip.link
-    ? `<a href="${escapeHtml(tip.link)}" target="_blank" rel="noreferrer">Link</a>`
+  const ageLabel = tip.alter || "Alter offen";
+  const link = tip.url
+    ? `<a href="${escapeHtml(tip.url)}" target="_blank" rel="noreferrer">Link</a>`
     : "<span></span>";
 
   return `
@@ -129,9 +119,7 @@ function renderTip(tip, index) {
       <p>${escapeHtml(tip.warum)}</p>
       <div class="meta-list">
         <span>${escapeHtml(tip.medium)}</span>
-        <span>${ageLabel}</span>
-        <span>${escapeHtml(tip.ort || "ueberall")}</span>
-        ${tags.map((tag) => `<span>#${escapeHtml(tag)}</span>`).join("")}
+        <span>${escapeHtml(ageLabel)}</span>
       </div>
       <div class="source-line">
         <span>Empfohlen von ${escapeHtml(tip.quelle)}</span>
@@ -142,19 +130,45 @@ function renderTip(tip, index) {
 }
 
 function normalizeTip(row) {
+  const age = row.alter || "";
+
   return {
     titel: row.titel || "",
     kategorie: row.kategorie || "Sonstiges",
-    alterMin: Number(row.alter_min || 0),
-    alterMax: Number(row.alter_max || 18),
-    medium: row.medium || "Tipp",
-    ort: row.ort || "",
-    quelle: row.quelle || "Unbekannt",
-    warum: row.warum || "",
-    tags: row.tags || "",
-    bewaehrtSeit: row.bewaehrt_seit || "",
-    link: row.link || "",
+    alter: age,
+    alterMin: parseAge(age).min,
+    alterMax: parseAge(age).max,
+    medium: row.medium || row.kategorie || "Tipp",
+    quelle: row.quelle || "Schwarm",
+    warum: row.warum || row.hinweise || "Noch keine Hinweise hinterlegt.",
+    url: row.url || row.link || "",
   };
+}
+
+async function loadTips() {
+  try {
+    const response = await fetch(API_URL);
+    if (!response.ok) throw new Error("API nicht erreichbar");
+    const tips = await response.json();
+    return tips.map(normalizeTip);
+  } catch (error) {
+    const csv = await fetch(LOCAL_CSV_URL).then((response) => response.text());
+    return parseCsv(csv).map(normalizeTip);
+  }
+}
+
+function parseAge(value) {
+  const numbers = String(value || "").match(/\d+/g)?.map(Number) || [];
+
+  if (numbers.length >= 2) {
+    return { min: numbers[0], max: numbers[1] };
+  }
+
+  if (numbers.length === 1) {
+    return { min: numbers[0], max: numbers[0] };
+  }
+
+  return { min: 0, max: 18 };
 }
 
 function populateSelect(select, values) {
@@ -220,4 +234,3 @@ function escapeHtml(value) {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 }
-
