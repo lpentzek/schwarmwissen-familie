@@ -1,0 +1,372 @@
+:root {
+  --ink: #24201b;
+  --muted: #6f665d;
+  --line: #ded7cd;
+  --paper: #fbfaf7;
+  --wash: #f2efe8;
+  --green: #2e6f5e;
+  --blue: #315f88;
+  --red: #a94c44;
+  --yellow: #c18b2d;
+  --white: #ffffff;
+  --shadow: 0 18px 48px rgba(64, 55, 43, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 64px;
+  padding: 12px clamp(16px, 4vw, 48px);
+  border-bottom: 1px solid var(--line);
+  background: rgba(251, 250, 247, 0.92);
+  backdrop-filter: blur(14px);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: inherit;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.brand-mark {
+  display: inline-grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border-radius: 8px;
+  color: var(--white);
+  background: var(--green);
+  font-size: 0.78rem;
+  letter-spacing: 0;
+}
+
+.topbar-meta {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+main {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
+  gap: clamp(24px, 5vw, 72px);
+  align-items: center;
+  min-height: 390px;
+  padding: 52px 0 28px;
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  color: var(--green);
+  font-size: 0.86rem;
+  font-weight: 750;
+  text-transform: uppercase;
+}
+
+h1 {
+  max-width: 760px;
+  margin: 0;
+  font-size: clamp(2.25rem, 7vw, 5rem);
+  line-height: 0.98;
+  letter-spacing: 0;
+}
+
+.intro-copy > p:last-child {
+  max-width: 680px;
+  margin: 22px 0 0;
+  color: var(--muted);
+  font-size: clamp(1rem, 2vw, 1.22rem);
+  line-height: 1.6;
+}
+
+.signal-board {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  align-self: stretch;
+  min-height: 280px;
+}
+
+.tile {
+  display: grid;
+  min-height: 132px;
+  place-items: center;
+  border: 1px solid rgba(36, 32, 27, 0.1);
+  border-radius: 8px;
+  color: var(--white);
+  font-weight: 800;
+  box-shadow: var(--shadow);
+}
+
+.tile-book {
+  background: var(--green);
+}
+
+.tile-audio {
+  background: var(--blue);
+}
+
+.tile-place {
+  background: var(--yellow);
+}
+
+.tile-hack {
+  background: var(--red);
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) repeat(3, minmax(150px, 210px)) auto;
+  gap: 12px;
+  align-items: end;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--white);
+  box-shadow: 0 10px 30px rgba(64, 55, 43, 0.08);
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 750;
+  text-transform: uppercase;
+}
+
+input,
+select,
+button {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font: inherit;
+}
+
+input,
+select {
+  padding: 0 12px;
+  color: var(--ink);
+  background: var(--paper);
+}
+
+button {
+  padding: 0 14px;
+  cursor: pointer;
+}
+
+.ghost-button {
+  color: var(--ink);
+  background: var(--wash);
+  font-weight: 750;
+}
+
+.content-shell {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: 24px;
+  padding: 28px 0 56px;
+}
+
+.quick-stats {
+  position: sticky;
+  top: 88px;
+  align-self: start;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--wash);
+}
+
+h2 {
+  margin: 0 0 16px;
+  font-size: 1rem;
+}
+
+dl {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+dl > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+dt {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+dd {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.tip-card {
+  display: grid;
+  gap: 14px;
+  min-height: 260px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-top: 6px solid var(--green);
+  border-radius: 8px;
+  background: var(--white);
+  box-shadow: 0 12px 34px rgba(64, 55, 43, 0.08);
+}
+
+.tip-card[data-color="blue"] {
+  border-top-color: var(--blue);
+}
+
+.tip-card[data-color="red"] {
+  border-top-color: var(--red);
+}
+
+.tip-card[data-color="yellow"] {
+  border-top-color: var(--yellow);
+}
+
+.tip-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.tip-card h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.25;
+}
+
+.badge {
+  flex: 0 0 auto;
+  align-self: start;
+  padding: 6px 9px;
+  border-radius: 999px;
+  color: var(--green);
+  background: #e5f0eb;
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+.tip-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.meta-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.meta-list span {
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: var(--wash);
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.source-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.source-line a {
+  color: var(--blue);
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.empty-state {
+  margin: 36px 0;
+  padding: 28px;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  color: var(--muted);
+  background: var(--white);
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .intro,
+  .content-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .filters {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .quick-stats {
+    position: static;
+  }
+}
+
+@media (max-width: 680px) {
+  main {
+    width: min(100% - 24px, 1180px);
+  }
+
+  .topbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .intro {
+    padding-top: 36px;
+  }
+
+  .signal-board,
+  .filters,
+  .tips-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tile {
+    min-height: 88px;
+  }
+}
+
