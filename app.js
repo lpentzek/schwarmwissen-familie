@@ -60,6 +60,10 @@ function filteredTips() {
       tip.titel,
       tip.kategorie,
       tip.hinweise,
+      tip.medium,
+      tip.ort,
+      tip.quelle,
+      tip.tags,
       tip.url,
     ].join(" ").toLowerCase();
 
@@ -72,14 +76,22 @@ function filteredTips() {
 
 function renderTip(tip) {
   const link = tip.url
-    ? `<a href="${escapeHtml(tip.url)}" target="_blank" rel="noreferrer">Link</a>`
+    ? `<a href="${escapeHtml(tip.url)}" target="_blank" rel="noreferrer">ansehen</a>`
     : "";
+  const meta = renderMeta([
+    formatAge(tip.alterMin, tip.alterMax),
+    tip.medium,
+    tip.ort,
+    tip.quelle ? `von ${tip.quelle}` : "",
+    tip.bewaehrtSeit ? `seit ${tip.bewaehrtSeit}` : "",
+  ]);
 
   return `
     <article class="register-item">
       <div class="record-main">
         <h3>${escapeHtml(tip.titel)}</h3>
         <p>${escapeHtml(tip.hinweise)}</p>
+        ${meta}
       </div>
       <div class="record-side">
         <span class="category-chip">${escapeHtml(tip.kategorie)}</span>
@@ -93,6 +105,11 @@ function normalizeTip(row) {
   return {
     titel: row.titel || row.name || row.titel_name || "",
     kategorie: row.kategorie || "Sonstiges",
+    alterMin: row.alter_min || row.alter_von || row.ab_alter || "",
+    alterMax: row.alter_max || row.alter_bis || "",
+    medium: row.medium || row.typ || "",
+    ort: row.ort || "",
+    quelle: row.quelle || row.empfohlen_von || "",
     hinweise:
       row.hinweise ||
       row.bemerkungen ||
@@ -100,8 +117,28 @@ function normalizeTip(row) {
       row.hinweise_und_bemerkungen ||
       row.warum ||
       "Noch keine Hinweise hinterlegt.",
+    tags: row.tags || "",
+    bewaehrtSeit: row.bewaehrt_seit || row.bewahrt_seit || row.seit || "",
     url: row.url || row.link || "",
   };
+}
+
+function renderMeta(values) {
+  const items = values.filter(Boolean);
+  if (!items.length) return "";
+
+  return `
+    <div class="record-meta">
+      ${items.map((value) => `<span>${escapeHtml(value)}</span>`).join("")}
+    </div>
+  `;
+}
+
+function formatAge(min, max) {
+  if (min && max) return `${min}-${max} Jahre`;
+  if (min) return `ab ${min} Jahren`;
+  if (max) return `bis ${max} Jahre`;
+  return "";
 }
 
 async function loadTips() {

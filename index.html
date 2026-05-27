@@ -21,11 +21,11 @@
 
     <main>
       <section class="intro">
-        <p class="eyebrow">Register aus dem Familienalltag</p>
-        <h1>Eine schmale Sammlung guter Hinweise.</h1>
+        <p class="eyebrow">Tipps aus unserem Kreis</p>
+        <h1>Eine kleine Sammlung guter Hinweise.</h1>
         <p>
-          Vier Felder, wenig Reibung: Titel, Kategorie, Bemerkung und ein optionaler Link.
-          Alles kommt frisch aus dem Google Sheet.
+          Dinge, Orte und Medien, die bei uns im Familienalltag wirklich empfohlen wurden.
+          Kurz notiert, schnell gefunden.
         </p>
       </section>
 
@@ -43,21 +43,20 @@
             </select>
           </div>
 
-          <button id="resetFilters" class="reset-button" type="button">Zuruecksetzen</button>
+          <button id="resetFilters" class="reset-button" type="button">Zurücksetzen</button>
         </div>
 
         <section class="register" aria-label="Empfehlungen">
           <div class="register-head">
             <div>
               <h2>Empfehlungen</h2>
-              <span class="register-note">Live aus Google Sheets</span>
+              <span class="register-note">Kurze Hinweise aus der gemeinsamen Liste.</span>
             </div>
-            <span class="status-pill">nur lesen</span>
           </div>
 
           <div id="tipsGrid" class="register-list" aria-live="polite"></div>
           <p id="emptyState" class="empty-state" hidden>
-            Nichts gefunden.
+            Nichts gefunden. Vielleicht anders suchen oder die Kategorie wechseln.
           </p>
         </section>
       </section>
