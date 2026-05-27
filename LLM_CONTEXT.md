@@ -24,22 +24,28 @@ Eltern und Familien im eigenen Umfeld, die wenig Zeit haben und schnell gute Emp
 
 - Statische Frontend-Dateien liegen im Projektroot: `index.html`, `styles.css`, `app.js`.
 - Die App zeigt Empfehlungen als lesbares Register mit Suche und Kategorie-Filter.
-- Daten kommen bevorzugt ueber `/api/tipps`.
-- Wenn die API nicht erreichbar ist, faellt das Frontend auf `data/tipps.csv` zurueck.
+- Daten kommen produktiv ueber `/api/tipps`.
+- Es gibt keinen lokalen CSV-Fallback mehr. Wenn die API nicht erreichbar ist, zeigt das Frontend einen ehrlichen Fehlerzustand statt Beispieldaten.
 - Die API-Logik liegt in `functions/api/tipps.js`.
 - Ziel-Hosting ist eine statische Website, z.B. ueber Cloudflare Pages.
 - Die produktive Datenquelle ist ein Google Sheet, angebunden ueber eine API beziehungsweise Serverless Function.
 
 ## Wichtige Datenfelder
 
-Die aktuelle Oberflaeche ist bewusst einfach und orientiert sich an wenigen Feldern:
+Die aktuelle Oberflaeche ist bewusst einfach, nutzt aber echte Kontextfelder aus dem Google Sheet:
 
 - `titel`: Name des Tipps.
 - `kategorie`: Primaeres Filter-Kriterium.
+- `alter_min` und `alter_max`: Optionale Altersspanne.
+- `medium`: Optionaler Typ, zum Beispiel Buch, Hoerspiel, Ausflug oder Hack.
+- `ort`: Optionaler Ort.
+- `quelle`: Optionaler Name der Person, von der der Tipp kommt.
 - `hinweise`: Authentische Erfahrungen und Notizen aus dem Kreis. Wenn der Inhalt als Markdown-Stichpunktliste kommt, sollte er im Frontend als saubere `ul`/`li`-Liste dargestellt werden.
+- `tags`: Optionale Suchbegriffe.
+- `bewaehrt_seit`: Optionales Jahr oder kurzer Zeitraum.
 - `url`: Optionaler externer Link. Wenn vorhanden, als klare Aktion anzeigen.
 
-Alternative Spaltennamen werden in `app.js` teilweise normalisiert, zum Beispiel `name`, `bemerkungen`, `warum` oder `link`.
+Alternative Spaltennamen werden in `app.js` und `functions/api/tipps.js` teilweise normalisiert, zum Beispiel `name`, `bemerkungen`, `warum` oder `link`.
 
 ## Kategorien
 

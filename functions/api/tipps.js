@@ -146,14 +146,22 @@ function rowsToTips(values) {
 
       return {
         titel: item.titel || item.name || item.titel_name || "",
-        kategorie: item.kategorie || "",
+        kategorie: item.kategorie || "Sonstiges",
+        alter_min: item.alter_min || item.alter_von || item.ab_alter || "",
+        alter_max: item.alter_max || item.alter_bis || "",
+        medium: item.medium || item.typ || "",
+        ort: item.ort || "",
+        quelle: item.quelle || item.empfohlen_von || "",
         hinweise:
           item.hinweise ||
           item.bemerkungen ||
           item.hinweise_bemerkungen ||
           item.hinweise_und_bemerkungen ||
+          item.warum ||
           "",
-        url: item.url || "",
+        tags: item.tags || "",
+        bewaehrt_seit: item.bewaehrt_seit || item.bewahrt_seit || item.seit || "",
+        url: item.url || item.link || "",
       };
     });
 }

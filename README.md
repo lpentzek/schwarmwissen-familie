@@ -1,8 +1,8 @@
 # Schwarmwissen Familie
 
-Die digitale, kuratierte Abkuerzung fuer den Familienalltag.
+Eine kleine, werbefreie Sammlung praxiserprobter Empfehlungen aus dem eigenen Familien- und Freundeskreis.
 
-Schwarmwissen Familie ist ein gemeinsames, digitales Gedaechtnis aus einem vertrauten Freundes- und Familienkreis. Die Plattform buendelt ungefilterte, praxiserprobte Empfehlungen und macht Schluss mit der zeitfressenden Suche im unuebersichtlichen Online-Dschungel. Von Eltern fuer Eltern: unaufgeregt, unabhaengig und echt.
+Schwarmwissen Familie ist kein Testportal und keine Demo-App. Die Website liest ihre Inhalte produktiv aus einem Google Sheet und zeigt sie als ruhiges Register mit Suche und Kategorie-Filter.
 
 ## Idee
 
@@ -25,3 +25,28 @@ Schwarmwissen Familie sammelt genau dieses schmerzgepruefte Erfahrungswissen und
 
 - [Konzept](docs/konzept.md)
 
+## Produktiver Betrieb
+
+Die einzige Datenquelle der Website ist `/api/tipps`. Die API liegt in `functions/api/tipps.js` und liest das konfigurierte Google Sheet ueber einen Google-Service-Account.
+
+Erforderliche Environment Variables fuer Cloudflare Pages:
+
+- `GOOGLE_SHEET_ID`
+- `GOOGLE_CLIENT_EMAIL`
+- `GOOGLE_PRIVATE_KEY`
+
+Das Google Sheet muss fuer die Service-Account-Mailadresse freigegeben sein. Die Website enthaelt keinen lokalen CSV-Fallback mehr; wenn die API nicht erreichbar ist, zeigt das Frontend einen ehrlichen Fehlerzustand statt Beispieldaten.
+
+Unterstuetzte Spaltennamen im Sheet:
+
+- `titel`
+- `kategorie`
+- `alter_min`
+- `alter_max`
+- `medium`
+- `ort`
+- `quelle`
+- `hinweise` oder `warum`
+- `tags`
+- `bewaehrt_seit`
+- `url` oder `link`

@@ -1,4 +1,3 @@
-const LOCAL_CSV_URL = "data/tipps.csv";
 const API_URL = "/api/tipps";
 
 const state = {
@@ -21,11 +20,15 @@ const els = {
 init();
 
 async function init() {
-  state.tips = await loadTips();
-
-  populateSelect(els.category, unique(state.tips.map((tip) => tip.kategorie)));
   bindEvents();
-  render();
+
+  try {
+    state.tips = await loadTips();
+    populateSelect(els.category, unique(state.tips.map((tip) => tip.kategorie)));
+    render();
+  } catch (error) {
+    renderLoadError();
+  }
 }
 
 function bindEvents() {
@@ -142,15 +145,21 @@ function formatAge(min, max) {
 }
 
 async function loadTips() {
-  try {
-    const response = await fetch(API_URL, { cache: "no-store" });
-    if (!response.ok) throw new Error("API nicht erreichbar");
-    const tips = await response.json();
-    return tips.map(normalizeTip);
-  } catch (error) {
-    const csv = await fetch(LOCAL_CSV_URL).then((response) => response.text());
-    return parseCsv(csv).map(normalizeTip);
-  }
+  const response = await fetch(API_URL, { cache: "no-store" });
+  if (!response.ok) throw new Error("API nicht erreichbar");
+
+  const tips = await response.json();
+  if (!Array.isArray(tips)) throw new Error("Unerwartete API-Antwort");
+
+  return tips.map(normalizeTip);
+}
+
+function renderLoadError() {
+  els.grid.innerHTML = "";
+  els.empty.hidden = false;
+  els.empty.textContent =
+    "Die gemeinsame Liste konnte gerade nicht geladen werden. Bitte später noch einmal öffnen.";
+  els.resultCount.textContent = "0 Tipps";
 }
 
 function populateSelect(select, values) {
@@ -164,57 +173,6 @@ function populateSelect(select, values) {
 
 function unique(values) {
   return [...new Set(values.filter(Boolean))].sort((a, b) => a.localeCompare(b, "de"));
-}
-
-function parseCsv(csv) {
-  const rows = [];
-  let row = [];
-  let cell = "";
-  let insideQuotes = false;
-
-  for (let i = 0; i < csv.length; i += 1) {
-    const char = csv[i];
-    const next = csv[i + 1];
-
-    if (char === '"' && insideQuotes && next === '"') {
-      cell += '"';
-      i += 1;
-    } else if (char === '"') {
-      insideQuotes = !insideQuotes;
-    } else if (char === "," && !insideQuotes) {
-      row.push(cell);
-      cell = "";
-    } else if ((char === "\n" || char === "\r") && !insideQuotes) {
-      if (char === "\r" && next === "\n") i += 1;
-      row.push(cell);
-      rows.push(row);
-      row = [];
-      cell = "";
-    } else {
-      cell += char;
-    }
-  }
-
-  if (cell || row.length) {
-    row.push(cell);
-    rows.push(row);
-  }
-
-  const headers = rows.shift().map(normalizeDataKey);
-  return rows
-    .filter((cells) => cells.some((value) => value.trim()))
-    .map((cells) =>
-      Object.fromEntries(headers.map((header, index) => [header, (cells[index] || "").trim()]))
-    );
-}
-
-function normalizeDataKey(value) {
-  return String(value || "")
-    .trim()
-    .toLowerCase()
-    .replaceAll("&", "und")
-    .replace(/[^a-z0-9]+/g, "_")
-    .replace(/^_+|_+$/g, "");
 }
 
 function escapeHtml(value) {
