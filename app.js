@@ -11,6 +11,7 @@ const state = {
 const els = {
   search: document.querySelector("#search"),
   category: document.querySelector("#category"),
+  categoryRail: document.querySelector("#categoryRail"),
   reset: document.querySelector("#resetFilters"),
   grid: document.querySelector("#tipsGrid"),
   empty: document.querySelector("#emptyState"),
@@ -24,7 +25,9 @@ async function init() {
 
   try {
     state.tips = await loadTips();
-    populateSelect(els.category, unique(state.tips.map((tip) => tip.kategorie)));
+    const categories = unique(state.tips.map((tip) => tip.kategorie));
+    populateSelect(els.category, categories);
+    populateCategoryRail(categories);
     render();
   } catch (error) {
     renderLoadError();
@@ -55,6 +58,7 @@ function render() {
   els.grid.innerHTML = tips.map(renderTip).join("");
   els.empty.hidden = tips.length > 0;
   els.resultCount.textContent = `${tips.length} ${tips.length === 1 ? "Tipp" : "Tipps"}`;
+  updateCategoryRail();
 }
 
 function filteredTips() {
@@ -208,6 +212,37 @@ function populateSelect(select, values) {
     option.value = value;
     option.textContent = value;
     select.append(option);
+  });
+}
+
+function populateCategoryRail(values) {
+  if (!els.categoryRail) return;
+
+  els.categoryRail.innerHTML = values
+    .map(
+      (value) => `
+        <button class="shelf-filter" type="button" data-category="${escapeHtml(value)}" aria-pressed="false">
+          ${escapeHtml(value)}
+        </button>
+      `,
+    )
+    .join("");
+
+  els.categoryRail.querySelectorAll("button").forEach((button) => {
+    button.addEventListener("click", () => {
+      const category = button.dataset.category;
+      state.filters.category = state.filters.category === category ? "" : category;
+      els.category.value = state.filters.category;
+      render();
+    });
+  });
+}
+
+function updateCategoryRail() {
+  if (!els.categoryRail) return;
+
+  els.categoryRail.querySelectorAll("button").forEach((button) => {
+    button.setAttribute("aria-pressed", String(button.dataset.category === state.filters.category));
   });
 }
 

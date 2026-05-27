@@ -1,14 +1,14 @@
-# Schwarmwissen Familie
+# Kinder-Fundstuecke
 
 Eine kleine, werbefreie Sammlung praxiserprobter Empfehlungen aus dem eigenen Familien- und Freundeskreis.
 
-Schwarmwissen Familie ist kein Testportal und keine Demo-App. Die Website liest ihre Inhalte produktiv aus einem Google Sheet und zeigt sie als ruhiges Register mit Suche und Kategorie-Filter.
+Kinder-Fundstuecke ist kein Testportal und keine Demo-App. Die Website liest ihre Inhalte produktiv aus einem Google Sheet und zeigt sie als kuratierten Katalog mit Suche und Kategorie-Filter.
 
 ## Idee
 
 Wer heute nach Kinderbuechern, Medien oder Alltagshelfern sucht, landet schnell zwischen gehypten Erstausstattungslisten, SEO-Ratgebern und immergleichen Plattform-Empfehlungen. Die wirklich hilfreichen Hinweise liegen oft im eigenen Umfeld: bei Menschen, die Dinge selbst ausprobiert, verworfen, weiterempfohlen oder bewusst ausgelassen haben.
 
-Schwarmwissen Familie sammelt genau dieses schmerzgepruefte Erfahrungswissen und macht es fuer den eigenen Kreis auffindbar.
+Kinder-Fundstuecke sammelt genau dieses schmerzgepruefte Erfahrungswissen und macht es fuer den eigenen Kreis auffindbar.
 
 ## Marken-DNA
 

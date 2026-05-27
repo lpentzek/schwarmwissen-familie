@@ -1,10 +1,10 @@
-# LLM-Kontext: Schwarmwissen Familie
+# LLM-Kontext: Kinder-Fundstuecke
 
 Diese Datei ist eine kurze Orientierung fuer LLMs, die an diesem Projekt mitarbeiten.
 
 ## Projektidee
 
-Schwarmwissen Familie ist eine kleine, werbefreie Sammlung praxiserprobter Empfehlungen aus einem vertrauten Familien- und Freundeskreis. Die Plattform soll hilfreiche Hinweise aus dem echten Familienalltag auffindbar machen, ohne SEO-Rauschen, Sponsoring oder generische Ratgeberlogik.
+Kinder-Fundstuecke ist eine kleine, werbefreie Sammlung praxiserprobter Empfehlungen aus einem vertrauten Familien- und Freundeskreis. Die Plattform soll hilfreiche Hinweise aus dem echten Familienalltag auffindbar machen, ohne SEO-Rauschen, Sponsoring oder generische Ratgeberlogik.
 
 Die App funktioniert als Anti-Mainstream-Filter: keine Werbe-Popups, kein Affiliate-Spam, kein Plattform-Hype, sondern eine schnelle und pragmatische Uebersicht echter Tipps.
 
