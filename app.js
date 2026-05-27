@@ -122,7 +122,7 @@ function normalizeTip(row) {
       row.hinweise_bemerkungen ||
       row.hinweise_und_bemerkungen ||
       row.warum ||
-      "Noch keine Hinweise hinterlegt.",
+      "",
     tags: row.tags || "",
     bewaehrtSeit: row.bewaehrt_seit || row.bewahrt_seit || row.seit || "",
     url: row.url || row.link || "",
@@ -145,6 +145,8 @@ function renderNotes(value) {
     .split(/\r?\n/)
     .map((line) => line.trim())
     .filter(Boolean);
+  if (!lines.length) return "";
+
   const listItems = lines
     .map((line) => line.match(/^[-*]\s+(.+)$/))
     .filter(Boolean)
