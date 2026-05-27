@@ -1,4 +1,14 @@
 const API_URL = "/api/tipps";
+const FALLBACK_TEXTS = {
+  tip_fallback_category: "Sonstiges",
+  tip_source_prefix: "von",
+  tip_since_prefix: "seit",
+  tip_age_between: "{min}-{max} Jahre",
+  tip_age_min: "ab {min} Jahren",
+  tip_age_max: "bis {max} Jahre",
+  index_empty_state_error:
+    "Die gemeinsame Liste konnte gerade nicht geladen werden. Bitte sp\u00e4ter noch einmal \u00f6ffnen.",
+};
 
 const state = {
   tips: [],
@@ -20,6 +30,10 @@ const els = {
 init();
 
 async function init() {
+  if (window.UI_TEXTS?.ready) {
+    await window.UI_TEXTS.ready;
+  }
+
   bindEvents();
 
   try {
@@ -89,9 +103,9 @@ function renderTip(tip) {
     formatAge(tip.alterMin, tip.alterMax),
     tip.medium,
     tip.ort,
-    tip.bewaehrtSeit ? `seit ${tip.bewaehrtSeit}` : "",
+    tip.bewaehrtSeit ? `${text("tip_since_prefix")} ${tip.bewaehrtSeit}` : "",
   ]);
-  const source = tip.quelle ? `<span class="source-chip">von ${escapeHtml(tip.quelle)}</span>` : "";
+  const source = tip.quelle ? `<span class="source-chip">${text("tip_source_prefix")} ${escapeHtml(tip.quelle)}</span>` : "";
 
   return `
     <article class="register-item">
@@ -112,7 +126,7 @@ function renderTip(tip) {
 function normalizeTip(row) {
   return {
     titel: row.titel || row.name || row.titel_name || "",
-    kategorie: row.kategorie || "Sonstiges",
+    kategorie: row.kategorie || text("tip_fallback_category"),
     alterMin: row.alter_min || row.alter_von || row.ab_alter || "",
     alterMax: row.alter_max || row.alter_bis || "",
     medium: row.medium || row.typ || "",
@@ -168,9 +182,9 @@ function renderNotes(value) {
 }
 
 function formatAge(min, max) {
-  if (min && max) return `${min}-${max} Jahre`;
-  if (min) return `ab ${min} Jahren`;
-  if (max) return `bis ${max} Jahre`;
+  if (min && max) return interpolate(text("tip_age_between"), { min, max });
+  if (min) return interpolate(text("tip_age_min"), { min });
+  if (max) return interpolate(text("tip_age_max"), { max });
   return "";
 }
 
@@ -199,8 +213,7 @@ async function loadTips() {
 function renderLoadError() {
   els.grid.innerHTML = "";
   els.empty.hidden = false;
-  els.empty.textContent =
-    "Die gemeinsame Liste konnte gerade nicht geladen werden. Bitte sp\u00e4ter noch einmal \u00f6ffnen.";
+  els.empty.textContent = text("index_empty_state_error");
 }
 
 function populateSelect(select, values) {
@@ -245,6 +258,20 @@ function updateCategoryRail() {
 
 function unique(values) {
   return [...new Set(values.filter(Boolean))].sort((a, b) => a.localeCompare(b, "de"));
+}
+
+function text(label) {
+  const value = window.UI_TEXTS?.get?.(label);
+  if (typeof value === "string" && value.trim().length) return value;
+
+  return FALLBACK_TEXTS[label] || "";
+}
+
+function interpolate(template, values) {
+  return String(template).replaceAll(/\{([^}]+)\}/g, (match, key) => {
+    const value = values[key];
+    return value === undefined || value === null ? match : String(value);
+  });
 }
 
 function escapeHtml(value) {

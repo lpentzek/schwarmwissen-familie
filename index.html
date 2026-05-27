@@ -3,70 +3,81 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Kinder-Fundst&uuml;cke</title>
+    <title data-text-label="index_meta_title">Kinder-Fundst&uuml;cke</title>
     <link rel="stylesheet" href="styles.css">
   </head>
   <body class="theme-familienarchiv">
     <header class="site-header">
-      <a class="brand" href="./" aria-label="Kinder-Fundst&uuml;cke Startseite">
-        <span class="brand-mark" aria-hidden="true">KF</span>
+      <a
+        class="brand"
+        href="./"
+        aria-label="Kinder-Fundst&uuml;cke Startseite"
+        data-text-attr-aria-label="index_brand_aria_label"
+      >
+        <span class="brand-mark" aria-hidden="true" data-text-label="index_brand_mark">KF</span>
         <span class="brand-copy">
-          <span class="brand-title">Kinder-Fundst&uuml;cke</span>
-          <span class="brand-subtitle">Empfehlungen aus unserem Kreis</span>
+          <span class="brand-title" data-text-label="index_brand_title">Kinder-Fundst&uuml;cke</span>
+          <span class="brand-subtitle" data-text-label="index_brand_subtitle">Empfehlungen aus unserem Kreis</span>
         </span>
       </a>
 
-      <nav class="header-actions" aria-label="Hauptnavigation">
-        <a class="submit-link" href="tipp-einreichen.html">Tipp einreichen</a>
+      <nav class="header-actions" aria-label="Hauptnavigation" data-text-attr-aria-label="index_header_nav_aria_label">
+        <a class="submit-link" href="tipp-einreichen.html" data-text-label="index_submit_link">Tipp einreichen</a>
       </nav>
     </header>
 
     <main class="page">
-      <section class="masthead" aria-label="Einordnung">
-        <p class="eyebrow">Kinder-Fundst&uuml;cke</p>
-        <h1>Gute Dinge f&uuml;r kleine Leute, gesammelt von Menschen, denen wir vertrauen.</h1>
-        <p>
+      <section class="masthead" aria-label="Einordnung" data-text-attr-aria-label="index_masthead_aria_label">
+        <p class="eyebrow" data-text-label="index_eyebrow">Kinder-Fundst&uuml;cke</p>
+        <h1 data-text-label="index_heading">Gute Dinge f&uuml;r kleine Leute, gesammelt von Menschen, denen wir vertrauen.</h1>
+        <p data-text-label="index_intro">
           B&uuml;cher, H&ouml;rspiele, Orte, Helferlein und Alltagsideen, die im echten Familienleben
           empfohlen wurden. Ohne Ranking, ohne Werbung, ohne Ratgeberton.
         </p>
       </section>
 
-      <section class="finder" aria-label="Tipps filtern">
+      <section class="finder" aria-label="Tipps filtern" data-text-attr-aria-label="index_finder_aria_label">
         <div class="finder-search">
-          <label for="search">Suchen</label>
-          <input id="search" type="search" placeholder="Titel, Ort, Hinweis oder Quelle">
+          <label for="search" data-text-label="index_search_label">Suchen</label>
+          <input
+            id="search"
+            type="search"
+            placeholder="Titel, Ort, Hinweis oder Quelle"
+            data-text-attr-placeholder="index_search_placeholder"
+          >
         </div>
 
         <div class="finder-controls">
           <div class="field">
-            <label for="category">Kategorie</label>
+            <label for="category" data-text-label="index_category_label">Kategorie</label>
             <select id="category">
-              <option value="">Alle Kategorien</option>
+              <option value="" data-text-label="index_category_all">Alle Kategorien</option>
             </select>
           </div>
 
-          <button id="resetFilters" class="reset-button" type="button">Zur&uuml;cksetzen</button>
+          <button id="resetFilters" class="reset-button" type="button" data-text-label="index_reset_button">Zur&uuml;cksetzen</button>
         </div>
 
-        <div id="categoryRail" class="category-rail" aria-label="Kategorien"></div>
+        <div id="categoryRail" class="category-rail" aria-label="Kategorien" data-text-attr-aria-label="index_category_rail_aria_label"></div>
       </section>
 
-      <section class="collection" aria-label="Empfehlungen">
+      <section class="collection" aria-label="Empfehlungen" data-text-attr-aria-label="index_collection_aria_label">
         <div class="collection-head">
           <div>
-            <p class="section-kicker">Sammlung</p>
-            <h2>Fundst&uuml;cke</h2>
+            <p class="section-kicker" data-text-label="index_section_kicker">Sammlung</p>
+            <h2 data-text-label="index_collection_heading">Fundst&uuml;cke</h2>
           </div>
-          <p>Kurze Empfehlungen aus der gemeinsamen Liste.</p>
+          <p data-text-label="index_collection_intro">Kurze Empfehlungen aus der gemeinsamen Liste.</p>
         </div>
 
         <div id="tipsGrid" class="register-list" aria-live="polite"></div>
-        <p id="emptyState" class="empty-state" hidden>
+        <p id="emptyState" class="empty-state" data-text-label="index_empty_state" hidden>
           Nichts gefunden. Vielleicht anders suchen oder die Kategorie wechseln.
         </p>
       </section>
     </main>
 
+    <script src="text-labels.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
