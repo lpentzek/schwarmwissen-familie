@@ -6,16 +6,12 @@ const state = {
   filters: {
     search: "",
     category: "",
-    age: "",
-    medium: "",
   },
 };
 
 const els = {
   search: document.querySelector("#search"),
   category: document.querySelector("#category"),
-  age: document.querySelector("#age"),
-  medium: document.querySelector("#medium"),
   reset: document.querySelector("#resetFilters"),
   grid: document.querySelector("#tipsGrid"),
   empty: document.querySelector("#emptyState"),
@@ -28,7 +24,6 @@ async function init() {
   state.tips = await loadTips();
 
   populateSelect(els.category, unique(state.tips.map((tip) => tip.kategorie)));
-  populateSelect(els.medium, unique(state.tips.map((tip) => tip.medium)));
   bindEvents();
   render();
 }
@@ -44,22 +39,10 @@ function bindEvents() {
     render();
   });
 
-  els.age.addEventListener("change", (event) => {
-    state.filters.age = event.target.value;
-    render();
-  });
-
-  els.medium.addEventListener("change", (event) => {
-    state.filters.medium = event.target.value;
-    render();
-  });
-
   els.reset.addEventListener("click", () => {
-    state.filters = { search: "", category: "", age: "", medium: "" };
+    state.filters = { search: "", category: "" };
     els.search.value = "";
     els.category.value = "";
-    els.age.value = "";
-    els.medium.value = "";
     render();
   });
 }
@@ -76,52 +59,30 @@ function filteredTips() {
     const text = [
       tip.titel,
       tip.kategorie,
-      tip.medium,
-      tip.quelle,
-      tip.warum,
+      tip.hinweise,
       tip.url,
     ].join(" ").toLowerCase();
 
     const matchesSearch = !state.filters.search || text.includes(state.filters.search);
     const matchesCategory = !state.filters.category || tip.kategorie === state.filters.category;
-    const matchesMedium = !state.filters.medium || tip.medium === state.filters.medium;
-    const matchesAge = !state.filters.age || ageMatches(tip, Number(state.filters.age));
 
-    return matchesSearch && matchesCategory && matchesMedium && matchesAge;
+    return matchesSearch && matchesCategory;
   });
 }
 
-function ageMatches(tip, ageStart) {
-  const ageEnd = ageStart === 9 ? 18 : ageStart + 2;
-  return tip.alterMin <= ageEnd && tip.alterMax >= ageStart;
-}
-
 function renderTip(tip) {
-  const ageLabel = tip.alter || "Alter offen";
   const link = tip.url
-    ? `<a href="${escapeHtml(tip.url)}" target="_blank" rel="noreferrer">Oeffnen</a>`
-    : "<span>-</span>";
+    ? `<a href="${escapeHtml(tip.url)}" target="_blank" rel="noreferrer">Link</a>`
+    : "";
 
   return `
-    <article class="tip-card">
-      <div class="tip-title">
+    <article class="register-item">
+      <div class="record-main">
         <h3>${escapeHtml(tip.titel)}</h3>
-        <span class="tip-subtle">${escapeHtml(tip.quelle)}</span>
+        <p>${escapeHtml(tip.hinweise)}</p>
       </div>
-      <div class="tip-category">
-        <span class="cell-label">Kategorie</span>
-        <span>${escapeHtml(tip.kategorie)}</span>
-      </div>
-      <div class="tip-age">
-        <span class="cell-label">Alter</span>
-        <span>${escapeHtml(ageLabel)}</span>
-      </div>
-      <div class="tip-note">
-        <span class="cell-label">Hinweis</span>
-        <span>${escapeHtml(tip.warum)}</span>
-      </div>
-      <div class="tip-link">
-        <span class="cell-label">URL</span>
+      <div class="record-side">
+        <span class="category-chip">${escapeHtml(tip.kategorie)}</span>
         ${link}
       </div>
     </article>
@@ -129,17 +90,16 @@ function renderTip(tip) {
 }
 
 function normalizeTip(row) {
-  const age = row.alter || "";
-
   return {
-    titel: row.titel || "",
+    titel: row.titel || row.name || row.titel_name || "",
     kategorie: row.kategorie || "Sonstiges",
-    alter: age,
-    alterMin: parseAge(age).min,
-    alterMax: parseAge(age).max,
-    medium: row.medium || row.kategorie || "Tipp",
-    quelle: row.quelle || "Schwarm",
-    warum: row.warum || row.hinweise || "Noch keine Hinweise hinterlegt.",
+    hinweise:
+      row.hinweise ||
+      row.bemerkungen ||
+      row.hinweise_bemerkungen ||
+      row.hinweise_und_bemerkungen ||
+      row.warum ||
+      "Noch keine Hinweise hinterlegt.",
     url: row.url || row.link || "",
   };
 }
@@ -154,20 +114,6 @@ async function loadTips() {
     const csv = await fetch(LOCAL_CSV_URL).then((response) => response.text());
     return parseCsv(csv).map(normalizeTip);
   }
-}
-
-function parseAge(value) {
-  const numbers = String(value || "").match(/\d+/g)?.map(Number) || [];
-
-  if (numbers.length >= 2) {
-    return { min: numbers[0], max: numbers[1] };
-  }
-
-  if (numbers.length === 1) {
-    return { min: numbers[0], max: numbers[0] };
-  }
-
-  return { min: 0, max: 18 };
 }
 
 function populateSelect(select, values) {
@@ -217,12 +163,21 @@ function parseCsv(csv) {
     rows.push(row);
   }
 
-  const headers = rows.shift().map((header) => header.trim());
+  const headers = rows.shift().map(normalizeDataKey);
   return rows
     .filter((cells) => cells.some((value) => value.trim()))
     .map((cells) =>
       Object.fromEntries(headers.map((header, index) => [header, (cells[index] || "").trim()]))
     );
+}
+
+function normalizeDataKey(value) {
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .replaceAll("&", "und")
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "");
 }
 
 function escapeHtml(value) {

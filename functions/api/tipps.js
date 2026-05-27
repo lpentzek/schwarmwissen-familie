@@ -1,4 +1,4 @@
-const SHEET_RANGE = "A:E";
+const SHEET_RANGE = "A:Z";
 const TOKEN_URL = "https://oauth2.googleapis.com/token";
 const SCOPE = "https://www.googleapis.com/auth/spreadsheets.readonly";
 
@@ -145,10 +145,14 @@ function rowsToTips(values) {
       );
 
       return {
-        titel: item.titel || "",
+        titel: item.titel || item.name || item.titel_name || "",
         kategorie: item.kategorie || "",
-        alter: item.alter || "",
-        hinweise: item.hinweise || "",
+        hinweise:
+          item.hinweise ||
+          item.bemerkungen ||
+          item.hinweise_bemerkungen ||
+          item.hinweise_und_bemerkungen ||
+          "",
         url: item.url || "",
       };
     });
@@ -158,7 +162,9 @@ function normalizeHeader(header) {
   return String(header || "")
     .trim()
     .toLowerCase()
-    .replaceAll(" ", "_");
+    .replaceAll("&", "und")
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "");
 }
 
 function json(data, headers = {}, status = 200) {

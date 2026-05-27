@@ -21,67 +21,41 @@
 
     <main>
       <section class="intro">
-        <p class="eyebrow">Private Empfehlungsdatenbank</p>
-        <h1>Tipps aus dem Familienalltag, sauber sortiert.</h1>
+        <p class="eyebrow">Register aus dem Familienalltag</p>
+        <h1>Eine schmale Sammlung guter Hinweise.</h1>
         <p>
-          Eine kleine, dynamische Datenbank aus unserem Google Sheet. Fokus auf schnelle Suche,
-          klare Filter und knappe Hinweise.
+          Vier Felder, wenig Reibung: Titel, Kategorie, Bemerkung und ein optionaler Link.
+          Alles kommt frisch aus dem Google Sheet.
         </p>
       </section>
 
-      <section class="database-shell">
-        <div class="toolbar" aria-label="Tipps filtern">
-          <div class="filter-group">
+      <section class="register-shell">
+        <div class="register-toolbar" aria-label="Tipps filtern">
+          <div class="field field-search">
             <label for="search">Suche</label>
             <input id="search" type="search" placeholder="Titel, Kategorie oder Hinweis">
           </div>
 
-          <div class="filter-group">
+          <div class="field">
             <label for="category">Kategorie</label>
             <select id="category">
               <option value="">Alle</option>
             </select>
           </div>
 
-          <div class="filter-group">
-            <label for="age">Alter</label>
-            <select id="age">
-              <option value="">Alle</option>
-              <option value="0">0-2 Jahre</option>
-              <option value="3">3-5 Jahre</option>
-              <option value="6">6-8 Jahre</option>
-              <option value="9">9+ Jahre</option>
-            </select>
-          </div>
-
-          <div class="filter-group">
-            <label for="medium">Typ</label>
-            <select id="medium">
-              <option value="">Alle</option>
-            </select>
-          </div>
-
-          <button id="resetFilters" class="ghost-button" type="button">Filter zuruecksetzen</button>
+          <button id="resetFilters" class="reset-button" type="button">Zuruecksetzen</button>
         </div>
 
-        <section class="archive" aria-label="Empfehlungen">
-          <div class="archive-head">
+        <section class="register" aria-label="Empfehlungen">
+          <div class="register-head">
             <div>
               <h2>Empfehlungen</h2>
-              <span class="archive-note">Live aus Google Sheets</span>
+              <span class="register-note">Live aus Google Sheets</span>
             </div>
-            <span class="status-pill">readonly</span>
+            <span class="status-pill">nur lesen</span>
           </div>
 
-          <div class="table-head" aria-hidden="true">
-            <span>Titel</span>
-            <span>Kategorie</span>
-            <span>Alter</span>
-            <span>Hinweis</span>
-            <span>URL</span>
-          </div>
-
-          <div id="tipsGrid" class="tips-list" aria-live="polite"></div>
+          <div id="tipsGrid" class="register-list" aria-live="polite"></div>
           <p id="emptyState" class="empty-state" hidden>
             Nichts gefunden.
           </p>
