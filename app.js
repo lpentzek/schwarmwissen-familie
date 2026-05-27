@@ -79,25 +79,28 @@ function filteredTips() {
 
 function renderTip(tip) {
   const link = tip.url
-    ? `<a href="${escapeHtml(tip.url)}" target="_blank" rel="noreferrer">ansehen</a>`
+    ? `<a class="record-link" href="${escapeHtml(tip.url)}" target="_blank" rel="noreferrer">${escapeHtml(
+        formatUrlLabel(tip.url),
+      )}</a>`
     : "";
   const meta = renderMeta([
     formatAge(tip.alterMin, tip.alterMax),
     tip.medium,
     tip.ort,
-    tip.quelle ? `von ${tip.quelle}` : "",
     tip.bewaehrtSeit ? `seit ${tip.bewaehrtSeit}` : "",
   ]);
+  const source = tip.quelle ? `<span class="source-chip">von ${escapeHtml(tip.quelle)}</span>` : "";
 
   return `
     <article class="register-item">
       <div class="record-main">
         <h3>${escapeHtml(tip.titel)}</h3>
-        <p>${escapeHtml(tip.hinweise)}</p>
+        ${renderNotes(tip.hinweise)}
         ${meta}
       </div>
       <div class="record-side">
         <span class="category-chip">${escapeHtml(tip.kategorie)}</span>
+        ${source}
         ${link}
       </div>
     </article>
@@ -137,11 +140,46 @@ function renderMeta(values) {
   `;
 }
 
+function renderNotes(value) {
+  const lines = String(value)
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+  const listItems = lines
+    .map((line) => line.match(/^[-*]\s+(.+)$/))
+    .filter(Boolean)
+    .map((match) => match[1]);
+
+  if (listItems.length && listItems.length === lines.length) {
+    return `
+      <div class="record-notes">
+        <ul>
+          ${listItems.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+        </ul>
+      </div>
+    `;
+  }
+
+  return `<p>${escapeHtml(value)}</p>`;
+}
+
 function formatAge(min, max) {
   if (min && max) return `${min}-${max} Jahre`;
   if (min) return `ab ${min} Jahren`;
   if (max) return `bis ${max} Jahre`;
   return "";
+}
+
+function formatUrlLabel(value) {
+  try {
+    const url = new URL(value);
+    const path = url.pathname.replace(/\/$/, "");
+    const label = `${url.hostname.replace(/^www\./, "")}${path}`;
+
+    return label.length > 42 ? `${label.slice(0, 39)}...` : label;
+  } catch (error) {
+    return value.length > 42 ? `${value.slice(0, 39)}...` : value;
+  }
 }
 
 async function loadTips() {
@@ -158,7 +196,7 @@ function renderLoadError() {
   els.grid.innerHTML = "";
   els.empty.hidden = false;
   els.empty.textContent =
-    "Die gemeinsame Liste konnte gerade nicht geladen werden. Bitte später noch einmal öffnen.";
+    "Die gemeinsame Liste konnte gerade nicht geladen werden. Bitte sp\u00e4ter noch einmal \u00f6ffnen.";
   els.resultCount.textContent = "0 Tipps";
 }
 
