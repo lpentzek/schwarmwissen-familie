@@ -25,11 +25,11 @@
       </div>
     </header>
 
-    <main>
+    <main class="library-main">
       <section class="intro">
         <div class="intro-copy">
-          <p class="eyebrow">Familienbibliothek</p>
-          <h1>Bew&auml;hrte Dinge aus unserem gemeinsamen Regal.</h1>
+          <p class="eyebrow">Privater Katalog</p>
+          <h1>Das Regal f&uuml;r Dinge, die jemand wirklich empfehlen w&uuml;rde.</h1>
           <p>
             Eine ruhige Sammlung guter Empfehlungen aus dem eigenen Kreis:
             B&uuml;cher, H&ouml;rspiele, Orte, Helferlein und kleine Alltagsabk&uuml;rzungen,
@@ -38,27 +38,35 @@
         </div>
       </section>
 
-      <section class="register-shell">
-        <div class="register-toolbar" aria-label="Tipps filtern">
-          <div class="field field-search">
-            <label for="search">Suche</label>
-            <input id="search" type="search" placeholder="Titel, Kategorie oder Hinweis">
+      <section class="library-desk">
+        <aside class="catalog-panel" aria-label="Tipps filtern">
+          <div class="panel-head">
+            <span>Katalogsuche</span>
+            <strong>Auswahl</strong>
           </div>
 
-          <div class="field">
-            <label for="category">Kategorie</label>
-            <select id="category">
-              <option value="">Alle</option>
-            </select>
-          </div>
+          <div class="register-toolbar">
+            <div class="field field-search">
+              <label for="search">Suchbegriff</label>
+              <input id="search" type="search" placeholder="Titel, Ort, Hinweis">
+            </div>
 
-          <button id="resetFilters" class="reset-button" type="button">Zur&uuml;cksetzen</button>
-        </div>
+            <div class="field">
+              <label for="category">Regal</label>
+              <select id="category">
+                <option value="">Alle Regale</option>
+              </select>
+            </div>
+
+            <button id="resetFilters" class="reset-button" type="button">Auswahl leeren</button>
+          </div>
+        </aside>
 
         <section class="register" aria-label="Empfehlungen">
           <div class="register-head">
             <div>
-              <h2>Katalog</h2>
+              <span class="register-label">Bestand</span>
+              <h2>Katalogkarten</h2>
               <span class="register-note">Handverlesene Eintr&auml;ge aus der gemeinsamen Liste.</span>
             </div>
           </div>
