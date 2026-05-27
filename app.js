@@ -15,7 +15,6 @@ const els = {
   reset: document.querySelector("#resetFilters"),
   grid: document.querySelector("#tipsGrid"),
   empty: document.querySelector("#emptyState"),
-  resultCount: document.querySelector("#resultCount"),
 };
 
 init();
@@ -57,7 +56,6 @@ function render() {
   const tips = filteredTips();
   els.grid.innerHTML = tips.map(renderTip).join("");
   els.empty.hidden = tips.length > 0;
-  els.resultCount.textContent = `${tips.length} ${tips.length === 1 ? "Tipp" : "Tipps"}`;
   updateCategoryRail();
 }
 
@@ -203,7 +201,6 @@ function renderLoadError() {
   els.empty.hidden = false;
   els.empty.textContent =
     "Die gemeinsame Liste konnte gerade nicht geladen werden. Bitte sp\u00e4ter noch einmal \u00f6ffnen.";
-  els.resultCount.textContent = "0 Tipps";
 }
 
 function populateSelect(select, values) {

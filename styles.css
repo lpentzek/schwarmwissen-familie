@@ -188,8 +188,7 @@ select {
   justify-content: flex-end;
 }
 
-.submit-link,
-.result-count {
+.submit-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -209,11 +208,6 @@ select {
 
 .submit-link:hover {
   background: var(--wine);
-}
-
-.result-count {
-  background: var(--surface);
-  color: var(--green);
 }
 
 .page {
