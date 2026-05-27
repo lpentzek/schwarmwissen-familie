@@ -6,62 +6,64 @@
     <title>Kinder-Fundst&uuml;cke</title>
     <link rel="stylesheet" href="styles.css">
   </head>
-  <body class="catalog-room">
-    <header class="identity-rail">
+  <body class="theme-familienarchiv">
+    <header class="site-header">
       <a class="brand" href="./" aria-label="Kinder-Fundst&uuml;cke Startseite">
         <span class="brand-mark" aria-hidden="true">KF</span>
         <span class="brand-copy">
           <span class="brand-title">Kinder-Fundst&uuml;cke</span>
-          <span class="brand-subtitle">Privater Bestand</span>
+          <span class="brand-subtitle">Empfehlungen aus unserem Kreis</span>
         </span>
       </a>
 
-      <nav class="rail-actions" aria-label="Hauptnavigation">
+      <nav class="header-actions" aria-label="Hauptnavigation">
         <a class="submit-link" href="tipp-einreichen.html">Tipp einreichen</a>
-        <span class="topbar-meta" id="resultCount">0 Tipps</span>
+        <span class="result-count" id="resultCount">0 Tipps</span>
       </nav>
     </header>
 
-    <main class="catalog-board">
-      <section class="catalog-thesis" aria-label="Einordnung">
-        <p class="eyebrow">Keine Plattform. Kein Ratgeber. Ein Bestand.</p>
-        <h1>Empfehlungen wie ausgeliehene B&uuml;cher: nur behalten, was jemand wirklich zur&uuml;cklegen w&uuml;rde.</h1>
+    <main class="page">
+      <section class="masthead" aria-label="Einordnung">
+        <p class="eyebrow">Kinder-Fundst&uuml;cke</p>
+        <h1>Gute Dinge f&uuml;r kleine Leute, gesammelt von Menschen, denen wir vertrauen.</h1>
+        <p>
+          B&uuml;cher, H&ouml;rspiele, Orte, Helferlein und Alltagsideen, die im echten Familienleben
+          empfohlen wurden. Ohne Ranking, ohne Werbung, ohne Ratgeberton.
+        </p>
       </section>
 
-      <section class="catalog-drawer" aria-label="Tipps filtern">
-        <div class="drawer-label">
-          <span>Kataloglade</span>
-          <strong>Suchen</strong>
+      <section class="finder" aria-label="Tipps filtern">
+        <div class="finder-search">
+          <label for="search">Suchen</label>
+          <input id="search" type="search" placeholder="Titel, Ort, Hinweis oder Quelle">
         </div>
 
-        <div class="drawer-search">
-          <label for="search">Suchspur</label>
-          <input id="search" type="search" placeholder="Titel, Ort, Hinweis, Quelle">
-        </div>
-
-        <div class="drawer-controls">
+        <div class="finder-controls">
           <div class="field">
-            <label for="category">Regal</label>
+            <label for="category">Kategorie</label>
             <select id="category">
-              <option value="">Alle Regale</option>
+              <option value="">Alle Kategorien</option>
             </select>
           </div>
 
-          <button id="resetFilters" class="reset-button" type="button">Leeren</button>
+          <button id="resetFilters" class="reset-button" type="button">Zur&uuml;cksetzen</button>
         </div>
 
-        <div id="categoryRail" class="category-rail" aria-label="Regale"></div>
+        <div id="categoryRail" class="category-rail" aria-label="Kategorien"></div>
       </section>
 
-      <section class="catalog-stack" aria-label="Empfehlungen">
-        <div class="stack-head">
-          <span>Bestand</span>
-          <strong>Karteikarten</strong>
+      <section class="collection" aria-label="Empfehlungen">
+        <div class="collection-head">
+          <div>
+            <p class="section-kicker">Sammlung</p>
+            <h2>Fundst&uuml;cke</h2>
+          </div>
+          <p>Kurze Empfehlungen aus der gemeinsamen Liste.</p>
         </div>
 
         <div id="tipsGrid" class="register-list" aria-live="polite"></div>
         <p id="emptyState" class="empty-state" hidden>
-          Nichts gefunden. Vielleicht anders suchen oder das Regal wechseln.
+          Nichts gefunden. Vielleicht anders suchen oder die Kategorie wechseln.
         </p>
       </section>
     </main>
