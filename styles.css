@@ -110,8 +110,15 @@ main {
   font-size: 0.88rem;
 }
 
+.topbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
 .topbar-meta {
-  justify-self: end;
   min-width: 86px;
   padding: 7px 10px;
   border: 1px solid var(--line-strong);
@@ -120,6 +127,27 @@ main {
   font-weight: 780;
   text-align: center;
   white-space: nowrap;
+}
+
+.submit-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 6px 11px;
+  border: 2px solid var(--line-strong);
+  background: var(--signal);
+  color: var(--ink);
+  font-size: 0.88rem;
+  font-weight: 840;
+  text-decoration: none;
+  box-shadow: 3px 3px 0 var(--ink);
+  white-space: nowrap;
+}
+
+.submit-link:hover {
+  background: var(--tomato);
+  color: #fffdf6;
 }
 
 .intro {
@@ -449,6 +477,31 @@ button:focus-visible {
   color: var(--muted);
 }
 
+.submit-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.submit-page .topbar {
+  flex: none;
+}
+
+.submit-main {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+}
+
+.submit-main iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
 @media (max-width: 900px) {
   .intro {
     grid-template-columns: 1fr;
@@ -486,8 +539,13 @@ button:focus-visible {
     gap: 9px;
   }
 
-  .topbar-meta {
+  .topbar-actions {
     justify-self: start;
+    justify-content: flex-start;
+  }
+
+  .topbar-meta {
+    justify-self: auto;
   }
 
   .intro {
